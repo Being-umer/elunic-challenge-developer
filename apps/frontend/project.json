@@ -17,10 +17,8 @@
         "tsConfig": "apps/frontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          {
-            "glob": "**/*",
-            "input": "apps/frontend/public"
-          }
+         "apps/frontend/src/assets",
+         "apps/frontend/src/favicon.ico"
         ],
         "styles": ["apps/frontend/src/styles.scss"],
         "scripts": []
@@ -59,10 +57,7 @@
           "buildTarget": "frontend:build:development"
         }
       },
-      "defaultConfiguration": "development",
-      "options": {
-        "proxyConfig": "apps/frontend/proxy.conf.json"
-      }
+      "defaultConfiguration": "development"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -71,7 +66,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -83,10 +79,7 @@
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "frontend:build",
-        "port": 4200,
-        "staticFilePath": "dist/apps/frontend/browser",
-        "spa": true
+        "buildTarget": "frontend:build"
       }
     }
   }

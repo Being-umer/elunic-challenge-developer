@@ -1,12 +1,47 @@
 <div class="container">
-  <p-card header="Challenge 1: PrimeNG Components with API Data">
-    <div class="message-container">
-      <p-message *ngIf="message" severity="info" [text]="message"></p-message>
-    </div>
-    
-    <div class="list-container">
-      <h3>Items from API:</h3>
-      <p-listbox [options]="items"></p-listbox>
-    </div>
+  <p-card header="User Messages" styleClass="custom-card">
+   <!-- Message Form will come here -->
+    <form class="message-form" (ngSubmit)="submitMessage()" autocomplete="off">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="username">Username</label>
+          <input pInputText id="username" name="username" [(ngModel)]="newMessage.username" placeholder="Enter your username" required />
+        </div>
+        <div class="p-field">
+          <label for="message">Message</label>
+          <textarea pInputTextarea id="message" name="message" [(ngModel)]="newMessage.message" placeholder="Enter your message" rows="3" required></textarea>
+        </div>
+        <div class="p-field" style="text-align: right;">
+          <button pButton type="submit" label="Send Message" [disabled]="!newMessage.username || !newMessage.message" icon="pi pi-send" class="p-button-success"></button>
+        </div>
+      </div>
+
+    </form>
+
+
+    <!-- Messages Table -->
+     <p-table [value]="message" responsiveLayout="scroll" class=""mt-4>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Username</th>
+          <th>Message</th>
+          <th>Created At</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-message>
+        <tr>
+          <td>{{message.username}}</td>
+          <td>{{message.message}}</td>
+          <td>{{message.created_at | date:'medium'}}</td>
+        </tr>
+      </ng-template>
+     </p-table>
+
+     <!-- Pagination Section -->
+      <div class="p-d-flex p-jc-end p-mt-3">
+        <button pButton type="button" label="Previous" [disabled]="currentPage === 1" (click)="onPageChange({page:currentPage - 2})" class="p-button-text"></button>
+        <span class="p-mx-2">Page {{currentPage}} of {{totalPages}}</span>
+        <button pButton type="button" label="Next" [disabled]="currentPage === totalPages" (click)="onPageChange({page: currentPage})" class="p-button-text"></button>
+      </div>
   </p-card>
 </div> 
